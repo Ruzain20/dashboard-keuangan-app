@@ -1,0 +1,216 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.sidebar{position:fixed;top:0;left:0;width:200px;height:100vh;background:#2c3e50;color:#fff;overflow-y:auto;z-index:10}
+.main{margin-left:200px;background:#f4f6f8;min-height:100vh}
+.nav-brand{padding:16px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:8px}
+.nav-brand .logo{width:28px;height:28px;background:#3498db;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.nav-label{padding:8px 16px 4px;font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px}
+.nav-item{display:flex;align-items:center;gap:8px;padding:9px 16px;font-size:13px;color:rgba(255,255,255,.7);cursor:pointer}
+.nav-item:hover{background:rgba(255,255,255,.07)}
+.nav-item.active{background:#3498db;color:#fff}
+.nav-item i{font-size:15px}
+.topbar{background:#3498db;padding:10px 20px;display:flex;align-items:center;justify-content:space-between}
+.topbar .bc{color:rgba(255,255,255,.8);font-size:13px}
+.topbar .bc span{color:#fff;font-weight:500}
+.topbar-r{display:flex;align-items:center;gap:12px}
+.topbar-r i{color:rgba(255,255,255,.85);font-size:18px;cursor:pointer}
+.avatar{width:30px;height:30px;border-radius:50%;background:#e74c3c;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#fff}
+.content{padding:20px}
+.stat-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.sc{border-radius:10px;padding:16px;display:flex;justify-content:space-between;align-items:flex-start;color:#fff}
+.sc.blue{background:#3498db}.sc.green{background:#27ae60}.sc.orange{background:#e67e22}.sc.red{background:#e74c3c}
+.sc .val{font-size:18px;font-weight:700;margin-bottom:2px}
+.sc .lbl{font-size:12px;opacity:.85}
+.sc .sub{font-size:10px;opacity:.7;margin-top:8px;display:flex;align-items:center;gap:3px}
+.sc .ib{width:38px;height:38px;background:rgba(255,255,255,.2);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.sc .ib i{font-size:19px}
+.row{display:grid;gap:16px;margin-bottom:16px}
+.r73{grid-template-columns:7fr 3.5fr}
+.r46{grid-template-columns:4fr 6fr}
+.card{background:#fff;border-radius:10px;border:.5px solid var(--color-border-tertiary);padding:16px}
+.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.card-title{font-size:14px;font-weight:500;color:var(--color-text-primary)}
+.yr-sel{padding:4px 10px;border:.5px solid var(--color-border-tertiary);border-radius:6px;font-size:12px;background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer}
+.search-row{display:flex;justify-content:flex-end;align-items:center;gap:6px;margin-bottom:10px;font-size:12px;color:var(--color-text-secondary)}
+.search-row input{padding:5px 10px;border:.5px solid var(--color-border-tertiary);border-radius:6px;font-size:12px;width:160px;background:var(--color-background-primary);color:var(--color-text-primary);outline:none;transition:border-color .15s}
+.search-row input:focus{border-color:#3498db}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{padding:7px 8px;text-align:left;color:var(--color-text-secondary);font-weight:500;border-bottom:.5px solid var(--color-border-tertiary);border-top:.5px solid var(--color-border-tertiary);cursor:pointer;user-select:none;white-space:nowrap}
+th:hover{color:var(--color-text-primary)}
+td{padding:7px 8px;color:var(--color-text-primary);border-bottom:.5px solid var(--color-border-tertiary)}
+.no-result td{text-align:center;color:var(--color-text-secondary);font-style:italic;padding:20px}
+.btn-edit{background:#27ae60;color:#fff;border:none;border-radius:4px;padding:3px 7px;cursor:pointer;font-size:11px}
+.btn-del{background:#e74c3c;color:#fff;border:none;border-radius:4px;padding:3px 7px;cursor:pointer;font-size:11px;margin-left:3px}
+.tfoot-row{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:12px;color:var(--color-text-secondary)}
+.pagination{display:flex;gap:4px}
+.pg-btn{padding:4px 9px;border:.5px solid var(--color-border-tertiary);border-radius:4px;background:var(--color-background-primary);color:var(--color-text-primary);font-size:12px;cursor:pointer;transition:background .1s}
+.pg-btn:hover:not(:disabled){background:var(--color-background-secondary)}
+.pg-btn.active{background:#3498db;color:#fff;border-color:#3498db}
+.pg-btn:disabled{opacity:.4;cursor:not-allowed}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:11px;color:var(--color-text-secondary)}
+.legend span{display:flex;align-items:center;gap:4px}
+.ld{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+th.asc .sort-icon::after{content:'▲'}
+th.desc .sort-icon::after{content:'▼'}
+th:not(.asc):not(.desc) .sort-icon::after{content:'↕'}
+</style>
+
+<h2 class="sr-only">Dashboard Keuangan — dengan Tenaga Kerja menggantikan Siswa</h2>
+
+<div style="display:flex">
+<div class="sidebar">
+  <div class="nav-brand">
+    <div class="logo">J</div>
+    <div><div style="font-size:13px;font-weight:600">Jagowebdev</div><div style="font-size:10px;opacity:.5">Multipurpose dashboard</div></div>
+  </div>
+  <div style="padding:8px 0">
+    <div class="nav-item active"><i class="ti ti-report-money" aria-hidden="true"></i> Keuangan</div>
+    <div class="nav-item"><i class="ti ti-briefcase" aria-hidden="true"></i> Tenaga Kerja</div>
+    <div class="nav-label">Pendapatan dan Pengeluaran</div>
+    <div style="font-size:10px;color:rgba(255,255,255,.3);padding:0 16px 6px">Kelola kas keluar dan masuk</div>
+    <div class="nav-item"><i class="ti ti-trending-up" aria-hidden="true"></i> Pendapatan</div>
+    <div class="nav-item"><i class="ti ti-trending-down" aria-hidden="true"></i> Pengeluaran</div>
+    <div class="nav-item"><i class="ti ti-adjustments" aria-hidden="true"></i> Penyesuaian Kas</div>
+    <div class="nav-item"><i class="ti ti-credit-card" aria-hidden="true"></i> Utang Pegawai</div>
+    <div class="nav-item"><i class="ti ti-file-text" aria-hidden="true"></i> Laporan</div>
+    <div class="nav-label">Buku Induk Tenaga Kerja dan Pegawai</div>
+    <div style="font-size:10px;color:rgba(255,255,255,.3);padding:0 16px 6px">Kelola data tenaga kerja dan pegawai</div>
+    <div class="nav-item"><i class="ti ti-school" aria-hidden="true"></i> Identitas Sekolah</div>
+    <div class="nav-item"><i class="ti ti-id-badge" aria-hidden="true"></i> Pegawai</div>
+    <div class="nav-item"><i class="ti ti-briefcase" aria-hidden="true"></i> Tenaga Kerja</div>
+    <div class="nav-item"><i class="ti ti-refresh" aria-hidden="true"></i> Ubah Status Tenaga Kerja</div>
+    <div class="nav-item"><i class="ti ti-history" aria-hidden="true"></i> Riwayat Status Tenaga Kerja</div>
+    <div class="nav-item"><i class="ti ti-bookmark" aria-hidden="true"></i> Referensi</div>
+    <div class="nav-label">Aplikasi</div>
+    <div class="nav-item"><i class="ti ti-settings" aria-hidden="true"></i> Setting</div>
+    <div class="nav-item"><i class="ti ti-tool" aria-hidden="true"></i> Aplikasi</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="bc">Home » <span>Dashboard Keuangan</span></div>
+    <div class="topbar-r">
+      <i class="ti ti-sun" aria-hidden="true"></i>
+      <i class="ti ti-settings" aria-hidden="true"></i>
+      <div class="avatar">A</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="stat-cards">
+      <div class="sc blue"><div><div class="val">55.230.000</div><div class="lbl">Saldo Kas</div><div class="sub"><i class="ti ti-calendar" style="font-size:10px"></i> Per 08 Oktober 2023</div></div><div class="ib"><i class="ti ti-wallet" aria-hidden="true"></i></div></div>
+      <div class="sc green"><div><div class="val">47.761.000</div><div class="lbl">Laba/Rugi</div><div class="sub"><i class="ti ti-calendar" style="font-size:10px"></i> Per 08 Oktober 2023</div></div><div class="ib"><i class="ti ti-chart-bar" aria-hidden="true"></i></div></div>
+      <div class="sc orange"><div><div class="val">250.250.000</div><div class="lbl">SPP Belum Dibayar</div><div class="sub"><i class="ti ti-briefcase" style="font-size:10px"></i> 80 tenaga kerja</div></div><div class="ib"><i class="ti ti-receipt" aria-hidden="true"></i></div></div>
+      <div class="sc red"><div><div class="val">1.700.000</div><div class="lbl">Utang Pegawai</div><div class="sub"><i class="ti ti-user" style="font-size:10px"></i> 3 pegawai</div></div><div class="ib"><i class="ti ti-credit-card" aria-hidden="true"></i></div></div>
+    </div>
+
+    <div class="row r73">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Rincian Pendapatan</div>
+          <select class="yr-sel"><option>2023</option><option>2022</option><option>2021</option></select>
+        </div>
+        <div class="search-row">Search: <input type="text" id="searchPendapatan" placeholder="Cari nama / kategori..." aria-label="Cari pendapatan"/></div>
+        <table>
+          <thead><tr>
+            <th style="width:32px">No</th>
+            <th data-col="nama" data-tbl="pend">Nama <span class="sort-icon"></span></th>
+            <th data-col="pendapatan" data-tbl="pend">Pendapatan <span class="sort-icon"></span></th>
+            <th data-col="jumlah" data-tbl="pend">Jml. Bayar <span class="sort-icon"></span></th>
+            <th data-col="tanggal" data-tbl="pend">Tgl. Bayar <span class="sort-icon"></span></th>
+            <th>Action</th>
+          </tr></thead>
+          <tbody id="bodyPendapatan"></tbody>
+        </table>
+        <div class="tfoot-row"><span id="infoPendapatan"></span><div class="pagination" id="pagPendapatan"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Pendapatan Terbesar</div><select class="yr-sel"><option>2023</option></select></div>
+        <div style="position:relative;height:190px"><canvas id="chartP" role="img" aria-label="Donat chart pendapatan terbesar">Dana BOS mendominasi</canvas></div>
+        <div class="legend">
+          <span><span class="ld" style="background:#8B3A3A"></span>Dana BOS</span>
+          <span><span class="ld" style="background:#7EC67E"></span>Iuran Komite</span>
+          <span><span class="ld" style="background:#E8C547"></span>Infaq</span>
+          <span><span class="ld" style="background:#5B5EA6"></span>SPP</span>
+          <span><span class="ld" style="background:#C8A96E"></span>Pembayaran Utang</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row r46">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Pengeluaran Terbesar</div><select class="yr-sel"><option>2023</option></select></div>
+        <div style="position:relative;height:190px"><canvas id="chartK" role="img" aria-label="Donat chart pengeluaran terbesar">Kegiatan/Event mendominasi</canvas></div>
+        <div class="legend">
+          <span><span class="ld" style="background:#6C5CE7"></span>Kegiatan/Event</span>
+          <span><span class="ld" style="background:#95A5A6"></span>Operasional Kantor</span>
+          <span><span class="ld" style="background:#A8E6CF"></span>Lain Lain</span>
+          <span><span class="ld" style="background:#F9CA24"></span>Belajar Mengajar</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Rincian Pengeluaran</div>
+          <select class="yr-sel"><option>2023</option><option>2022</option><option>2021</option></select>
+        </div>
+        <div class="search-row">Search: <input type="text" id="searchPengeluaran" placeholder="Cari kategori / jenis..." aria-label="Cari pengeluaran"/></div>
+        <table>
+          <thead><tr>
+            <th style="width:32px">No</th>
+            <th data-col="kategori" data-tbl="gel">Kategori <span class="sort-icon"></span></th>
+            <th data-col="jumlah" data-tbl="gel">Jumlah <span class="sort-icon"></span></th>
+            <th data-col="tanggal" data-tbl="gel">Tgl. Pengeluaran <span class="sort-icon"></span></th>
+            <th data-col="jenis" data-tbl="gel">Jenis <span class="sort-icon"></span></th>
+            <th>Action</th>
+          </tr></thead>
+          <tbody id="bodyPengeluaran"></tbody>
+        </table>
+        <div class="tfoot-row"><span id="infoPengeluaran"></span><div class="pagination" id="pagPengeluaran"></div></div>
+      </div>
+    </div>
+
+    <div style="font-size:11px;color:var(--color-text-secondary);text-align:center;padding-top:4px">© 2023 <a href="https://www.jagowebdev.com" style="color:#3498db">www.Jagowebdev.com</a></div>
+  </div>
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const dataPendapatan=[{id:1,nama:'Pemerintah',pendapatan:'Dana BOS',jumlah:50000000,tanggal:'2023-10-09'},{id:2,nama:'Alim Salim',pendapatan:'SPP, Iuran Komite',jumlah:6750000,tanggal:'2023-10-02'},{id:3,nama:'Budi Setiawan',pendapatan:'Infaq',jumlah:2500000,tanggal:'2023-10-06'},{id:4,nama:'Bilqis Habibah',pendapatan:'SPP',jumlah:1400000,tanggal:'2023-10-02'},{id:5,nama:'Kurniawan Al Ghifari',pendapatan:'Pembayaran Utang',jumlah:300000,tanggal:'2023-06-06'},{id:6,nama:'Siti Rahayu',pendapatan:'SPP',jumlah:1400000,tanggal:'2023-10-01'},{id:7,nama:'Ahmad Fauzi',pendapatan:'Iuran Komite',jumlah:500000,tanggal:'2023-09-28'},{id:8,nama:'Hendra Wijaya',pendapatan:'SPP',jumlah:1400000,tanggal:'2023-09-25'},{id:9,nama:'Dinas Pendidikan',pendapatan:'Dana BOS',jumlah:25000000,tanggal:'2023-09-15'},{id:10,nama:'Yayasan Al Ikhlas',pendapatan:'Infaq',jumlah:3000000,tanggal:'2023-09-10'},{id:11,nama:'Nurul Hidayah',pendapatan:'SPP',jumlah:1400000,tanggal:'2023-09-05'}];
+const dataPengeluaran=[{id:1,kategori:'Kegiatan/Event',jumlah:1700000,tanggal:'2023-10-10',jenis:'Transfer'},{id:2,kategori:'Operasional Kantor',jumlah:314000,tanggal:'2023-10-10',jenis:'Tunai'},{id:3,kategori:'Operasional Kantor',jumlah:255000,tanggal:'2023-10-09',jenis:'Tunai'},{id:4,kategori:'Lain Lain',jumlah:120000,tanggal:'2023-10-08',jenis:'Tunai'},{id:5,kategori:'Belajar Mengajar',jumlah:75000,tanggal:'2023-10-08',jenis:'Tunai'},{id:6,kategori:'Buku Paket',jumlah:450000,tanggal:'2023-10-05',jenis:'Transfer'},{id:7,kategori:'Futsal',jumlah:200000,tanggal:'2023-10-03',jenis:'Tunai'},{id:8,kategori:'Operasional Kantor',jumlah:180000,tanggal:'2023-09-30',jenis:'Tunai'},{id:9,kategori:'Kegiatan/Event',jumlah:600000,tanggal:'2023-09-20',jenis:'Transfer'}];
+const PS=5;
+function fmt(n){return n.toLocaleString('id-ID');}
+function fmtDate(d){return d.split('-').reverse().join('-');}
+function hl(t,q){if(!q)return t;const re=new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');return String(t).replace(re,'<mark style="background:#fff3cd;border-radius:2px;padding:0 1px">$1</mark>');}
+function makeTable(cfg){
+  const{data,searchId,bodyId,infoId,pagId,cols,tbl}=cfg;
+  const se=document.getElementById(searchId),be=document.getElementById(bodyId),ie=document.getElementById(infoId),pe=document.getElementById(pagId);
+  let cp=1,cs={col:'tanggal',dir:'desc'};
+  function gf(){const q=se.value.toLowerCase().trim();return data.filter(r=>cols.some(c=>String(r[c.key]).toLowerCase().includes(q)));}
+  function render(){
+    const q=se.value.toLowerCase().trim();
+    let rows=gf();
+    if(cs.col){rows.sort((a,b)=>{let av=a[cs.col],bv=b[cs.col];if(typeof av==='number')return cs.dir==='asc'?av-bv:bv-av;return cs.dir==='asc'?String(av).localeCompare(String(bv)):String(bv).localeCompare(String(av));});}
+    const total=rows.length,pages=Math.max(1,Math.ceil(total/PS));
+    if(cp>pages)cp=1;
+    const start=(cp-1)*PS,slice=rows.slice(start,start+PS);
+    if(!slice.length){be.innerHTML=`<tr class="no-result"><td colspan="${cols.length+2}">Tidak ada data yang cocok</td></tr>`;}
+    else{be.innerHTML=slice.map((row,i)=>{const cells=cols.map(c=>{let v=c.key==='jumlah'?fmt(row[c.key]):c.key==='tanggal'?fmtDate(row[c.key]):row[c.key];return`<td>${hl(v,q)}</td>`;}).join('');return`<tr><td>${start+i+1}</td>${cells}<td><button class="btn-edit"><i class="ti ti-edit"></i></button><button class="btn-del"><i class="ti ti-x"></i></button></td></tr>`;}).join('');}
+    ie.textContent=total===0?'Tidak ada data':`Showing ${start+1} to ${Math.min(start+PS,total)} of ${total} entries`;
+    pe.innerHTML='';
+    const pv=document.createElement('button');pv.className='pg-btn';pv.textContent='Previous';pv.disabled=(cp===1);pv.onclick=()=>{if(cp>1){cp--;render();}};pe.appendChild(pv);
+    let sp=Math.max(1,cp-2),ep=Math.min(pages,sp+4);if(ep-sp<4)sp=Math.max(1,ep-4);
+    for(let p=sp;p<=ep;p++){const b=document.createElement('button');b.className='pg-btn'+(p===cp?' active':'');b.textContent=p;b.onclick=(()=>{const pp=p;return()=>{cp=pp;render();};})();pe.appendChild(b);}
+    const nx=document.createElement('button');nx.className='pg-btn';nx.textContent='Next';nx.disabled=(cp===pages);nx.onclick=()=>{if(cp<pages){cp++;render();}};pe.appendChild(nx);
+  }
+  se.addEventListener('input',()=>{cp=1;render();});
+  document.querySelectorAll(`th[data-tbl="${tbl}"]`).forEach(th=>{th.addEventListener('click',()=>{const col=th.dataset.col;if(cs.col===col){cs.dir=cs.dir==='asc'?'desc':'asc';}else{cs={col,dir:'asc'};}document.querySelectorAll(`th[data-tbl="${tbl}"]`).forEach(t=>{t.classList.remove('asc','desc');});th.classList.add(cs.dir);render();});});
+  render();
+}
+makeTable({data:dataPendapatan,searchId:'searchPendapatan',bodyId:'bodyPendapatan',infoId:'infoPendapatan',pagId:'pagPendapatan',tbl:'pend',cols:[{key:'nama'},{key:'pendapatan'},{key:'jumlah'},{key:'tanggal'}]});
+makeTable({data:dataPengeluaran,searchId:'searchPengeluaran',bodyId:'bodyPengeluaran',infoId:'infoPengeluaran',pagId:'pagPengeluaran',tbl:'gel',cols:[{key:'kategori'},{key:'jumlah'},{key:'tanggal'},{key:'jenis'}]});
+new Chart(document.getElementById('chartP'),{type:'doughnut',data:{labels:['Dana BOS','Iuran Komite','Infaq','SPP','Pembayaran Utang'],datasets:[{data:[75000000,500000,5500000,5600000,300000],backgroundColor:['#8B3A3A','#7EC67E','#E8C547','#5B5EA6','#C8A96E'],borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{display:false}}}});
+new Chart(document.getElementById('chartK'),{type:'doughnut',data:{labels:['Kegiatan/Event','Operasional Kantor','Lain Lain','Belajar Mengajar','Buku Paket','Futsal'],datasets:[{data:[2300000,749000,120000,75000,450000,200000],backgroundColor:['#6C5CE7','#95A5A6','#A8E6CF','#F9CA24','#E67E22','#85C1E9'],borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{display:false}}}});
+</script>
